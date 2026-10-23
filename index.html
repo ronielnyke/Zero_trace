@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZERO TRACE: Code to Survive</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+
+<!-- CINEMATIC ADVERTISEMENT INTRO -->
+<div id="intro-screen">
+  <div class="intro-grid-floor"></div>
+  <div class="intro-orb orb1"></div>
+  <div class="intro-orb orb2"></div>
+  <div class="intro-orb orb3"></div>
+  <div class="intro-spot"></div>
+  <div class="intro-flash"></div>
+  <div class="intro-bar ib-top"></div>
+  <div class="intro-bar ib-bottom"></div>
+
+  <div class="intro-stage">
+    <!-- SCENE 1: SPONSOR PRESENTS -->
+    <div class="intro-scene sc-1">
+      <div class="sc1-badge"><i class="bi bi-buildings-fill"></i></div>
+      <div class="sc1-text">
+        <span class="sc1-k">ILOILO TECH COMPANY</span>
+        <span class="sc1-p">PRESENTS</span>
+      </div>
+      <div class="sc1-line"></div>
+    </div>
+
+    <!-- SCENE 2: DRAMATIC TITLE REVEAL -->
+    <div class="intro-scene sc-2">
+      <div class="sc2-over">A&nbsp;PROGRAMMING&nbsp;ADVENTURE</div>
+      <div class="sc2-title-wrap">
+        <h1 class="sc2-title" aria-label="ZERO TRACE">
+          <span>Z</span><span>E</span><span>R</span><span>O</span><span class="gap"></span><span>T</span><span>R</span><span>A</span><span>C</span><span>E</span>
+        </h1>
+        <div class="sc2-sweep"></div>
+      </div>
+      <div class="sc2-sub">CODE <b>TO</b> SURVIVE</div>
+      <div class="sc2-desc">The city is broken. <em>Code it back to life.</em></div>
+      <div class="sc2-feats"><span>8 DISTRICTS</span><i></i><span>40 MISSIONS</span><i></i><span>8 LANGUAGES</span></div>
+    </div>
+
+    <!-- SCENE 3: CREDITS -->
+    <div class="intro-scene sc-3">
+      <div class="sc3-card c-dev">
+        <label>DEVELOPED BY :</label>
+        <strong>Roniel Nyke Gonzales</strong>
+        <small>BS INFO TECH 2-B</small>
+      </div>
+      <div class="sc3-card c-sp">
+        <label>SPONSOR :</label>
+        <strong>ILOILO TECH COMPANY</strong>
+        <small>Powered by HTML &middot; CSS &middot; JavaScript</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="intro-progress">
+    <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="dot d4"></span>
+  </div>
+
+  <button id="intro-skip" class="intro-skip"><i class="bi bi-skip-forward-fill"></i> SKIP INTRO</button>
+</div>
+
+<!-- BOOT SCREEN -->
+<div id="boot-screen" class="d-none">
+  <div class="boot-inner">
+    <div class="boot-logo glitch" data-text="ZERO TRACE">ZERO TRACE</div>
+    <div class="boot-sub">CODE TO SURVIVE</div>
+    <div class="boot-bar"><div class="boot-bar-fill" id="boot-bar-fill"></div></div>
+    <div class="boot-status" id="boot-status">Initializing grid...</div>
+    <button id="boot-enter" class="btn-neon d-none"><i class="bi bi-play-fill"></i> ENTER THE GRID</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="d-none">
+
+  <!-- TOP NAV -->
+  <nav class="zt-nav">
+    <div class="zt-brand" id="nav-home">
+      <span class="zt-brand-mark"><i class="bi bi-terminal-fill"></i></span>
+      <span class="zt-brand-text">ZERO<b>TRACE</b></span>
+    </div>
+    <div class="zt-nav-right">
+      <div class="zt-xp-wrap">
+        <div class="zt-xp-info">
+          <span class="zt-level" id="nav-level">LVL 1</span>
+          <span class="zt-xp-num" id="nav-xp">0 XP</span>
+        </div>
+        <div class="zt-xp-bar"><div class="zt-xp-fill" id="nav-xp-fill"></div></div>
+      </div>
+      <button class="zt-icon-btn" id="btn-voice" title="Toggle voice"><i class="bi bi-volume-up-fill"></i></button>
+      <button class="zt-icon-btn" id="btn-reset-progress" title="Reset progress"><i class="bi bi-arrow-counterclockwise"></i></button>
+    </div>
+  </nav>
+
+  <!-- MENU SCREEN -->
+  <section id="screen-menu" class="screen active">
+    <div class="menu-hero">
+      <div class="menu-tag">// CHAPTER 1: THE BROKEN WEB</div>
+      <h1 class="menu-title glitch" data-text="ZERO TRACE">ZERO TRACE</h1>
+      <p class="menu-sub">Don't just play the game. <span class="hl">Learn to build the system.</span></p>
+      <p class="menu-desc">The city's systems are down. As a trainee programmer, repair the digital world by solving real coding missions — logic, HTML, CSS, JavaScript, Python, PHP, SQL and React.</p>
+      <div class="menu-actions">
+        <button class="btn-neon btn-lg-anim" id="btn-start"><i class="bi bi-play-fill"></i> START MISSION</button>
+        <button class="btn-ghost" id="btn-how"><i class="bi bi-question-circle"></i> HOW TO PLAY</button>
+      </div>
+      <div class="menu-stats">
+        <div class="mstat"><span id="stat-completed">0</span><label>Missions Done</label></div>
+        <div class="mstat"><span id="stat-xp">0</span><label>Total XP</label></div>
+        <div class="mstat"><span id="stat-total">0</span><label>Total Missions</label></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP SCREEN -->
+  <section id="screen-map" class="screen">
+    <div class="screen-head">
+      <button class="btn-back" data-goto="screen-menu"><i class="bi bi-chevron-left"></i> MENU</button>
+      <h2 class="screen-title">CITY <span>GRID</span></h2>
+      <div class="screen-hint">Select a district to begin repairs</div>
+    </div>
+    <div class="map-grid" id="map-grid"></div>
+  </section>
+
+  <!-- MISSIONS SCREEN -->
+  <section id="screen-missions" class="screen">
+    <div class="screen-head">
+      <button class="btn-back" data-goto="screen-map"><i class="bi bi-chevron-left"></i> GRID</button>
+      <h2 class="screen-title" id="missions-title">DISTRICT</h2>
+      <div class="screen-hint" id="missions-sub">Choose a mission</div>
+    </div>
+    <div class="mission-list" id="mission-list"></div>
+  </section>
+
+  <!-- GAME SCREEN -->
+  <section id="screen-game" class="screen">
+    <div class="game-topbar">
+      <button class="btn-back" data-goto="screen-missions"><i class="bi bi-chevron-left"></i> MISSIONS</button>
+      <div class="game-title-wrap">
+        <div class="game-mission-tag" id="game-tag">MISSION</div>
+        <h3 class="game-mission-title" id="game-title">Title</h3>
+      </div>
+      <div class="game-badges">
+        <span class="badge-diff" id="game-diff">EASY</span>
+        <span class="badge-xp" id="game-xp"><i class="bi bi-lightning-charge-fill"></i> 100 XP</span>
+      </div>
+    </div>
+
+    <div class="game-story" id="game-story"></div>
+
+    <!-- MCQ AREA -->
+    <div id="mcq-area" class="mcq-area d-none">
+      <div class="mcq-question" id="mcq-question"></div>
+      <div class="mcq-options" id="mcq-options"></div>
+    </div>
+
+    <!-- CODE AREA -->
+    <div id="code-area" class="code-area">
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <div class="panel">
+            <div class="panel-head">
+              <span class="panel-dot r"></span><span class="panel-dot y"></span><span class="panel-dot g"></span>
+              <span class="panel-name" id="editor-filename">editor.js</span>
+              <div class="panel-actions">
+                <button class="mini-btn" id="btn-reset-code" title="Reset code"><i class="bi bi-arrow-counterclockwise"></i></button>
+                <button class="mini-btn" id="btn-hint" title="Hint"><i class="bi bi-lightbulb"></i></button>
+              </div>
+            </div>
+            <div class="editor-wrap">
+              <pre class="line-numbers" id="line-numbers">1</pre>
+              <textarea id="code-editor" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+            <button class="btn-run" id="btn-run"><i class="bi bi-play-fill"></i> RUN &amp; VERIFY</button>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="panel">
+            <div class="panel-head">
+              <span class="panel-dot r"></span><span class="panel-dot y"></span><span class="panel-dot g"></span>
+              <span class="panel-name">live_output.exe</span>
+            </div>
+            <iframe id="preview-frame" class="preview-frame" sandbox="allow-scripts"></iframe>
+            <div class="console-panel">
+              <div class="console-head"><i class="bi bi-terminal"></i> CONSOLE OUTPUT</div>
+              <div class="console-body" id="console-body"><div class="console-line dim">// Run your code to see output...</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="zt-footer">
+    <div class="zt-footer-line"></div>
+    <div class="zt-footer-content">
+      <div class="zt-footer-brand"><i class="bi bi-terminal-fill"></i> ZERO TRACE <span>// CODE TO SURVIVE</span></div>
+      <div class="zt-footer-credits">
+        <div class="credit"><label>DEVELOPED BY</label><span>Roniel Nyke Gonzales — BS INFO TECH 2-B</span></div>
+        <div class="credit sponsor"><label>SPONSOR</label><span>ILOILO TECH COMPANY</span></div>
+      </div>
+      <div class="zt-footer-note">Chapter 1: The Broken Web · Built with HTML · CSS · JavaScript</div>
+    </div>
+  </footer>
+</div>
+
+<!-- HOW TO PLAY MODAL -->
+<div class="modal fade zt-modal" id="howModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-question-circle"></i> HOW TO PLAY</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <ol class="how-list">
+          <li><b>Explore the City Grid</b> — 8 districts: Logic, HTML, CSS, JavaScript, Python, PHP, SQL and React.</li>
+          <li><b>Repair systems</b> — fix broken code in the editor, then press <b>RUN &amp; VERIFY</b>. Python runs on a real Python runtime; SQL executes on a live table engine; React renders live components.</li>
+          <li><b>Answer logic probes</b> — some missions are multiple choice. Read the code carefully.</li>
+          <li><b>Voice feedback</b> — the AI announces correct and wrong answers aloud. Toggle with the speaker icon.</li>
+          <li><b>Earn XP &amp; level up</b> — every repair awards XP. Progress saves automatically on this device.</li>
+          <li><b>Use hints</b> — stuck? Tap the lightbulb for a hint, then read the explanation after each mission.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HINT MODAL -->
+<div class="modal fade zt-modal" id="hintModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-lightbulb"></i> SYSTEM HINT</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body hint-body" id="hint-body"></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT MODAL -->
+<div class="modal fade zt-modal" id="resultModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" id="result-content">
+      <div class="modal-body result-body">
+        <div class="result-icon" id="result-icon"><i class="bi bi-check-lg"></i></div>
+        <h3 class="result-title" id="result-title">SYSTEM RESTORED</h3>
+        <div class="result-xp" id="result-xp">+100 XP</div>
+        <p class="result-msg" id="result-msg"></p>
+        <div class="result-explain" id="result-explain"></div>
+        <div class="result-actions">
+          <button class="btn-ghost" data-bs-dismiss="modal" id="result-retry"><i class="bi bi-arrow-repeat"></i> REPLAY</button>
+          <button class="btn-neon" id="result-next"><i class="bi bi-chevron-right"></i> CONTINUE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-zone"></div>
+<div id="confetti-zone"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="data.js"></script>
+<script src="engine.js"></script>
+</body>
+</html>
